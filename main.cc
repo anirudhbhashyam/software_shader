@@ -3,7 +3,7 @@
 #include <fstream>
 #include <print>
 
-// GLSL plasma https://x.com/XorDev/status/1894123951401378051
+// Reference: GLSL plasma https://x.com/XorDev/status/1894123951401378051
 
 struct Vec4 {
     public:
@@ -219,11 +219,11 @@ inline float dot(const Vec2 &lhs, const Vec2 rhs) {
 }
 
 int32_t main() {
-    constexpr uint16_t scale{60};
-    constexpr uint16_t width{16 * scale};
-    constexpr uint16_t height{9 * scale};
-    constexpr double pi{3.1415926535};
-    for (int32_t i = 0; i < scale; ++i) {
+    constexpr uint16_t scale{ 60 };
+    constexpr uint16_t width{ 16 * scale };
+    constexpr uint16_t height{ 9 * scale };
+    constexpr double pi{ 3.1415926535 };
+    for (uint16_t i = 0; i < scale; ++i) {
         auto ppm_filepath{std::filesystem::path(std::format("out_{:02d}.ppm", i))};
         auto ppm_file{std::ofstream(ppm_filepath, std::ios::binary)};
 
@@ -234,10 +234,10 @@ int32_t main() {
 
         const float t = (static_cast<float>(i) / 240) * 2 * pi;
 
-        Vec2 r{static_cast<float>(width), static_cast<float>(height)};
-        for (int32_t y = 0; y < height; ++y) {
-            for (int32_t x = 0; x < width; ++x) {
-                Vec2 FC{static_cast<float>(x), static_cast<float>(y)};
+        Vec2 r{ static_cast<float>(width), static_cast<float>(height) };
+        for (uint16_t y = 0; y < height; ++y) {
+            for (uint16_t x = 0; x < width; ++x) {
+                Vec2 FC{ static_cast<float>(x), static_cast<float>(y) };
                 Vec2 p{ (FC * 2.0f - r) / r.y };
                 Vec2 l{ };
                 Vec2 i{ };
