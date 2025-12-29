@@ -9,7 +9,9 @@ struct Vec4 {
     public:
         Vec4() = default;
         Vec4(const float x, const float y, const float z, const float w)
-            : x(x), y(y), z(z), w(w) {}
+            : x(x), y(y), z(z), w(w)
+        {}
+
         Vec4 &operator+=(const Vec4 &vec) {
             this->x += vec.x;
             this->y += vec.y;
@@ -131,7 +133,9 @@ inline Vec4 tanh(const Vec4& vec) {
 struct Vec2 {
     public:
         Vec2() = default;
-        Vec2(const float x, const float y) : x(x), y(y) {}
+        Vec2(const float x, const float y)
+            : x(x), y(y)
+        {}
 
         Vec2 &operator+=(const Vec2 &vec) {
             this->x += vec.x;
@@ -167,6 +171,10 @@ struct Vec2 {
             this->x /= scale;
             this->y /= scale;
             return *this;
+        }
+
+        float dot(const Vec2 &vec) const {
+            return this->x * vec.x + this->y * vec.y;
         }
 
         Vec2 yx() const { return {y, x}; }
@@ -214,17 +222,13 @@ inline Vec2 cos(const Vec2 &vec) {
     };
 }
 
-inline float dot(const Vec2 &lhs, const Vec2 rhs) {
-    return lhs.x * rhs.x + lhs.y * rhs.y;
-}
-
 int32_t main() {
-    constexpr uint16_t scale{ 60 };
+    constexpr uint16_t scale{ 120 };
     constexpr uint16_t width{ 16 * scale };
     constexpr uint16_t height{ 9 * scale };
     constexpr double pi{ 3.1415926535 };
-    for (uint16_t i = 0; i < scale; ++i) {
-        auto ppm_filepath{std::filesystem::path(std::format("out_{:02d}.ppm", i))};
+    for (uint16_t timestep = 0; timestep < scale * 2; ++timestep) {
+        auto ppm_filepath{std::filesystem::path(std::format("out_{:02d}.ppm", timestep))};
         auto ppm_file{std::ofstream(ppm_filepath, std::ios::binary)};
 
         if (!ppm_file) continue;
@@ -232,7 +236,7 @@ int32_t main() {
         std::string ppm_header = std::format("P6 {} {} 255\n", width, height);
         ppm_file.write(ppm_header.c_str(), ppm_header.size());
 
-        const float t = (static_cast<float>(i) / 240) * 2 * pi;
+        const float t = (static_cast<float>(timestep) / 240) * 2 * pi;
 
         Vec2 r{ static_cast<float>(width), static_cast<float>(height) };
         for (uint16_t y = 0; y < height; ++y) {
@@ -241,7 +245,7 @@ int32_t main() {
                 Vec2 p{ (FC * 2.0f - r) / r.y };
                 Vec2 l{ };
                 Vec2 i{ };
-                Vec2 v{ p * (l += 4.f - 4.f * std::abs(.7f - dot(p, p))) };
+                Vec2 v{ p * (l += 4.f - 4.f * std::abs(.7f - p.dot(p))) };
                 Vec4 o{ };
                 for (; i.y++ < 8.; o += (sin(v.xyyx()) + 1.) * std::abs(v.x - v.y)) {
                     v += cos(v.yx() * i.y + i + t) / i.y + .7;
