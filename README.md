@@ -9,3 +9,5 @@ clang++ -std=c++23 -O3 -o main main.cc
 ./main
 ffmpeg -framerate 24 -i out_%02d.ppm shader.mp4
 ```
+
+![output.gif](output.gif)
