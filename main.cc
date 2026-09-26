@@ -5,6 +5,8 @@
 
 // Reference: GLSL plasma https://x.com/XorDev/status/1894123951401378051
 
+using u16 = uint16_t;
+
 struct Vec4 {
     public:
         Vec4() = default;
@@ -223,24 +225,28 @@ inline Vec2 cos(const Vec2 &vec) {
 }
 
 int32_t main() {
-    constexpr uint16_t scale{ 120 };
-    constexpr uint16_t width{ 16 * scale };
-    constexpr uint16_t height{ 9 * scale };
+    constexpr u16 scale{ 120 };
+    constexpr u16 width{ 16 * scale };
+    constexpr u16 height{ 9 * scale };
     constexpr double pi{ 3.1415926535 };
-    for (uint16_t timestep = 0; timestep < scale * 2; ++timestep) {
-        auto ppm_filepath{std::filesystem::path(std::format("out_{:02d}.ppm", timestep))};
-        auto ppm_file{std::ofstream(ppm_filepath, std::ios::binary)};
+    const std::string ppm_header{ std::format("P6 {} {} 255\n", width, height) };
+    for (u16 timestep = 0; timestep < scale * 2; ++timestep) {
+        auto ppm_filepath{
+            std::filesystem::path(std::format("out_{:02d}.ppm", timestep))
+        };
+        auto ppm_file{
+            std::ofstream(ppm_filepath, std::ios::binary)
+        };
 
         if (!ppm_file) continue;
 
-        std::string ppm_header = std::format("P6 {} {} 255\n", width, height);
         ppm_file.write(ppm_header.c_str(), ppm_header.size());
 
         const float t = (static_cast<float>(timestep) / 240) * 2 * pi;
 
         Vec2 r{ static_cast<float>(width), static_cast<float>(height) };
-        for (uint16_t y = 0; y < height; ++y) {
-            for (uint16_t x = 0; x < width; ++x) {
+        for (u16 y{ 0 }; y < height; ++y) {
+            for (u16 x{ 0 }; x < width; ++x) {
                 Vec2 FC{ static_cast<float>(x), static_cast<float>(y) };
                 Vec2 p{ (FC * 2.0f - r) / r.y };
                 Vec2 l{ };
@@ -256,7 +262,6 @@ int32_t main() {
                 ppm_file.put(static_cast<uint8_t>(o.z * 255));
             }
         }
-        ppm_file.close();
         std::println("File generated: {}", ppm_filepath.string());
     }
     return 0;
