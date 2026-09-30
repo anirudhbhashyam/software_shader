@@ -5,7 +5,10 @@
 
 // Reference: GLSL plasma https://x.com/XorDev/status/1894123951401378051
 
+using u8 = uint8_t;
 using u16 = uint16_t;
+using u64 = uint64_t;
+
 
 struct Vec4 {
     constexpr Vec4() = default;
@@ -219,6 +222,12 @@ constexpr Vec2 cos(const Vec2 &vec) {
         std::cosf(vec.y)
     };
 }
+
+template<u64 Width, u64 Height>
+struct Frame {
+    static constexpr u64 size{ Width * Height * 3 };
+    std::array<u8, size> pixels{ };
+};
 
 int32_t main() {
     constexpr u16 scale{ 120 };
