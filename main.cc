@@ -183,37 +183,37 @@ struct Vec2 {
     float x{ }, y{ };
 };
 
-inline Vec2 operator+(const Vec2 &lhs, const Vec2 &rhs) {
+constexpr Vec2 operator+(const Vec2 &lhs, const Vec2 &rhs) {
     Vec2 result{lhs};
     return result += rhs;
 }
 
-inline Vec2 operator+(const Vec2 &lhs, const float rhs) {
+constexpr Vec2 operator+(const Vec2 &lhs, const float rhs) {
     Vec2 result{lhs};
     return result += rhs;
 }
 
-inline Vec2 operator-(const Vec2 &lhs, const Vec2 &rhs) {
+constexpr Vec2 operator-(const Vec2 &lhs, const Vec2 &rhs) {
     Vec2 result{lhs};
     return result -= rhs;
 }
 
-inline Vec2 operator*(const Vec2 &lhs, const Vec2 &rhs) {
+constexpr Vec2 operator*(const Vec2 &lhs, const Vec2 &rhs) {
     Vec2 result{lhs};
     return result *= rhs;
 }
 
-inline Vec2 operator*(const Vec2 &lhs, const float rhs) {
+constexpr Vec2 operator*(const Vec2 &lhs, const float rhs) {
     Vec2 result{lhs};
     return result *= rhs;
 }
 
-inline Vec2 operator/(const Vec2 &lhs, const float rhs) {
+constexpr Vec2 operator/(const Vec2 &lhs, const float rhs) {
     Vec2 result{lhs};
     return result /= rhs;
 }
 
-inline Vec2 cos(const Vec2 &vec) {
+constexpr Vec2 cos(const Vec2 &vec) {
     return {
         std::cosf(vec.x),
         std::cosf(vec.y)
