@@ -8,80 +8,78 @@
 using u16 = uint16_t;
 
 struct Vec4 {
-    public:
-        Vec4() = default;
-        Vec4(const float x, const float y, const float z, const float w)
-            : x(x), y(y), z(z), w(w)
-        {}
+    constexpr Vec4() = default;
+    constexpr Vec4(const float x, const float y, const float z, const float w)
+        : x(x), y(y), z(z), w(w)
+    {}
 
-        Vec4 &operator+=(const Vec4 &vec) {
-            this->x += vec.x;
-            this->y += vec.y;
-            this->z += vec.z;
-            this->w += vec.w;
-            return *this;
-        }
+    constexpr Vec4 &operator+=(const Vec4 &vec) {
+        this->x += vec.x;
+        this->y += vec.y;
+        this->z += vec.z;
+        this->w += vec.w;
+        return *this;
+    }
 
-        Vec4 &operator+=(const float scale) {
-            this->x += scale;
-            this->y += scale;
-            this->z += scale;
-            this->w += scale;
-            return *this;
-        }
+    constexpr Vec4 &operator+=(const float scale) {
+        this->x += scale;
+        this->y += scale;
+        this->z += scale;
+        this->w += scale;
+        return *this;
+    }
 
-        Vec4 &operator-=(const float scale) {
-            this->x -= scale;
-            this->y -= scale;
-            this->z -= scale;
-            this->w -= scale;
-            return *this;
-        }
+    constexpr Vec4 &operator-=(const float scale) {
+        this->x -= scale;
+        this->y -= scale;
+        this->z -= scale;
+        this->w -= scale;
+        return *this;
+    }
 
-        Vec4 &operator*=(const Vec4 &vec) {
-            this->x *= vec.x;
-            this->y *= vec.y;
-            this->z *= vec.z;
-            this->w *= vec.w;
-            return *this;
-        }
+    constexpr Vec4 &operator*=(const Vec4 &vec) {
+        this->x *= vec.x;
+        this->y *= vec.y;
+        this->z *= vec.z;
+        this->w *= vec.w;
+        return *this;
+    }
 
-        Vec4 &operator*=(const float scale) {
-            this->x *= scale;
-            this->y *= scale;
-            this->z *= scale;
-            this->w *= scale;
-            return *this;
-        }
+    constexpr Vec4 &operator*=(const float scale) {
+        this->x *= scale;
+        this->y *= scale;
+        this->z *= scale;
+        this->w *= scale;
+        return *this;
+    }
 
-        Vec4 &operator/=(const Vec4 &vec) {
-            this->x /= vec.x;
-            this->y /= vec.y;
-            this->z /= vec.z;
-            this->w /= vec.w;
-            return *this;
-        }
+    constexpr Vec4 &operator/=(const Vec4 &vec) {
+        this->x /= vec.x;
+        this->y /= vec.y;
+        this->z /= vec.z;
+        this->w /= vec.w;
+        return *this;
+    }
 
-    public:
-        float x{ }, y{ }, z{ }, w{ };
+    float x{ }, y{ }, z{ }, w{ };
 };
 
-inline Vec4 operator+(const Vec4 &lhs, const Vec4 &rhs) {
+constexpr Vec4 operator+(const Vec4 &lhs, const Vec4 &rhs) {
     Vec4 result{lhs};
     return result += rhs;
 }
 
-inline Vec4 operator+(const Vec4 &lhs, const float scale) {
+constexpr Vec4 operator+(const Vec4 &lhs, const float scale) {
     Vec4 result{lhs};
     return result += scale;
 }
 
-inline Vec4 operator-(const Vec4 &lhs, const float scale) {
+constexpr Vec4 operator-(const Vec4 &lhs, const float scale) {
     Vec4 result{lhs};
     return result -= scale;
 }
 
-inline Vec4 operator-(const float scale, const Vec4 &vec) {
+constexpr Vec4 operator-(const float scale, const Vec4 &vec) {
     return {
         scale - vec.x,
         scale - vec.y,
@@ -90,22 +88,22 @@ inline Vec4 operator-(const float scale, const Vec4 &vec) {
     };
 }
 
-inline Vec4 operator*(const Vec4 &lhs, const float scale) {
+constexpr Vec4 operator*(const Vec4 &lhs, const float scale) {
     Vec4 result{lhs};
     return result *= scale;
 }
 
-inline Vec4 operator*(const float scale, const Vec4 &vec) {
+constexpr Vec4 operator*(const float scale, const Vec4 &vec) {
     Vec4 result{vec};
     return result *= scale;
 }
 
-inline Vec4 operator/(const Vec4 &lhs, const Vec4 &rhs) {
+constexpr Vec4 operator/(const Vec4 &lhs, const Vec4 &rhs) {
     Vec4 result{lhs};
     return result /= rhs;
 }
 
-inline Vec4 sin(const Vec4 &vec) {
+constexpr Vec4 sin(const Vec4 &vec) {
     return {
         std::sinf(vec.x),
         std::sinf(vec.y),
@@ -114,7 +112,7 @@ inline Vec4 sin(const Vec4 &vec) {
     };
 }
 
-inline Vec4 exp(const Vec4& vec) {
+constexpr Vec4 exp(const Vec4& vec) {
     return {
         std::expf(vec.x),
         std::expf(vec.y),
@@ -123,7 +121,7 @@ inline Vec4 exp(const Vec4& vec) {
     };
 }
 
-inline Vec4 tanh(const Vec4& vec) {
+constexpr Vec4 tanh(const Vec4& vec) {
     return {
         std::tanhf(vec.x),
         std::tanhf(vec.y),
@@ -133,58 +131,56 @@ inline Vec4 tanh(const Vec4& vec) {
 }
 
 struct Vec2 {
-    public:
-        Vec2() = default;
-        Vec2(const float x, const float y)
-            : x(x), y(y)
-        {}
+    constexpr Vec2() = default;
+    constexpr Vec2(const float x, const float y)
+        : x(x), y(y)
+    {}
 
-        Vec2 &operator+=(const Vec2 &vec) {
-            this->x += vec.x;
-            this->y += vec.y;
-            return *this;
-        }
+    constexpr Vec2 &operator+=(const Vec2 &vec) {
+        this->x += vec.x;
+        this->y += vec.y;
+        return *this;
+    }
 
-        Vec2 &operator+=(const float scale) {
-            this->x += scale;
-            this->y += scale;
-            return *this;
-        }
+    constexpr Vec2 &operator+=(const float scale) {
+        this->x += scale;
+        this->y += scale;
+        return *this;
+    }
 
-        Vec2 &operator-=(const Vec2 &vec) {
-            this->x -= vec.x;
-            this->y -= vec.y;
-            return *this;
-        }
+    constexpr Vec2 &operator-=(const Vec2 &vec) {
+        this->x -= vec.x;
+        this->y -= vec.y;
+        return *this;
+    }
 
-        Vec2 &operator*=(const Vec2 &vec) {
-            this->x *= vec.x;
-            this->y *= vec.y;
-            return *this;
-        }
+    constexpr Vec2 &operator*=(const Vec2 &vec) {
+        this->x *= vec.x;
+        this->y *= vec.y;
+        return *this;
+    }
 
-        Vec2 &operator*=(const float scale) {
-            this->x *= scale;
-            this->y *= scale;
-            return *this;
-        }
+    constexpr Vec2 &operator*=(const float scale) {
+        this->x *= scale;
+        this->y *= scale;
+        return *this;
+    }
 
-        Vec2 &operator/=(const float scale) {
-            this->x /= scale;
-            this->y /= scale;
-            return *this;
-        }
+    constexpr Vec2 &operator/=(const float scale) {
+        this->x /= scale;
+        this->y /= scale;
+        return *this;
+    }
 
-        float dot(const Vec2 &vec) const {
-            return this->x * vec.x + this->y * vec.y;
-        }
+    constexpr float dot(const Vec2 &vec) const {
+        return this->x * vec.x + this->y * vec.y;
+    }
 
-        Vec2 yx() const { return {y, x}; }
+    constexpr Vec2 yx() const { return {y, x}; }
 
-        Vec4 xyyx() const { return {x, y, y, x}; }
+    constexpr Vec4 xyyx() const { return {x, y, y, x}; }
 
-    public:
-        float x{ }, y{ };
+    float x{ }, y{ };
 };
 
 inline Vec2 operator+(const Vec2 &lhs, const Vec2 &rhs) {
