@@ -286,8 +286,8 @@ constexpr Vec2 cos(const Vec2 &vec) {
 }
 
 template<u64 Width, u64 Height, u64 channels = 3>
-consteval auto construct_frame(u64 timestep, u16 n_frames) {
-    std::array<u8, Width * Height * channels> pixels{ };
+consteval auto construct_frame(auto& pixels, u64 timestep, u16 n_frames) {
+    // std::array<u8, Width * Height * channels> pixels{ };
     Vec2 r{ static_cast<float>(Width), static_cast<float>(Height) };
     u64 idx{ };
     const float t = (static_cast<float>(timestep) / n_frames) * 2 * pi;
@@ -315,12 +315,12 @@ template<u64 Width, u64 Height, u64 Channels, u16 N_Frames>
 consteval auto generate_frames(u16 scale) {
     std::array<std::array<u8, Width * Height * Channels>, N_Frames> frames{ };
     for (u16 t{ 0 }; t < N_Frames; ++t) {
-        frames[t] = construct_frame<Width, Height>(t, N_Frames);
+        construct_frame<Width, Height>(frames[t], t, N_Frames);
     }
     return frames;
 }
 
-int32_t main() {
+i32 main() {
     constexpr u16 scale{ 10 };
     constexpr u16 n_frames{ scale * 2 };
     constexpr u64 width{ 16 * scale };
