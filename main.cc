@@ -285,9 +285,14 @@ constexpr Vec2 cos(const Vec2 &vec) {
     };
 }
 
-template<u64 Width, u64 Height, u64 channels = 3>
-consteval auto construct_frame(auto& pixels, u64 timestep, u16 n_frames) {
-    // std::array<u8, Width * Height * channels> pixels{ };
+template<typename T, typename IndexType = std::size_t>
+concept MutableIndexed = requires(T container, IndexType i, typename T::value_type val) {
+    container[i];
+    container[i] = val;
+};
+
+template<u64 Width, u64 Height>
+consteval auto construct_frame(MutableIndexed auto& pixels, u64 timestep, u16 n_frames) {
     Vec2 r{ static_cast<float>(Width), static_cast<float>(Height) };
     u64 idx{ };
     const float t = (static_cast<float>(timestep) / n_frames) * 2 * pi;
